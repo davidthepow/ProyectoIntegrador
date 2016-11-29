@@ -263,7 +263,7 @@ Statement sent;
 
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
        try {
-            String sql = "INSERT INTO `AGREGAR USUARIO`(`IDagregar`, `Usuario`, `Contrasena`, `Nombre`, `Apellido Paterno`, `Apellido Materno`, `Edad`, `Telefono`, `Sexo`, `Correo`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10])";
+            String sql = "INSERT INTO `AGREGAR USUARIO`(`IDagregar`, `Usuario`, `Contrasena`, `Nombre`, `Apellido Paterno`, `Apellido Materno`, `Edad`, `Telefono`, `Sexo`, `Correo`) "+ " values(?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareCall(sql);
             ps.setString(1, usu.getText());
             ps.setString(2, contra.getText());
