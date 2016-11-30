@@ -22,7 +22,7 @@ Statement sent;
         initComponents();
         con = Conexion.geConnection(); //Realizar la conexion a la base de datos
         desabilitar(); // Desabilitar el campo de texto 
-       
+        mostrar();
         b_agregar.setEnabled(false); // bloquear e boton agregar
     }
 
@@ -249,6 +249,7 @@ Statement sent;
             JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
         }
         desabilitar();
+        limpiar();
         b_agregar.setEnabled(false);
     }//GEN-LAST:event_b_agregarActionPerformed
 
@@ -332,7 +333,6 @@ Statement sent;
     cantidad.setEditable(true); 
     costo.setEditable(true);
     }
-
        
     private void desabilitar() { // Codigo para desabilitar y no agregar datos
         n_pro.setEditable(false);
@@ -350,5 +350,31 @@ Statement sent;
         clave.setText(null);
         cantidad.setText(null);
         costo.setText(null);
+    }
+    
+    private void mostrar() {
+       try {
+            con = Conexion.geConnection();
+            String[]titulos ={"ID Producto","Nombre del Producto","Clave","Cantidad","Costo","Fecha de Entrada","Fecha de Caducidad"};
+            String sql = "SELECT * FROM A_PRODUCTO";
+            model = new DefaultTableModel(null,titulos);
+            sent = con.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            
+            String []fila=new String[7];
+            while(rs.next()){
+                fila[0]=rs.getString("IDProducto");
+                fila[1]=rs.getString("N_Producto");
+                fila[2]=rs.getString("Clave");
+                fila[3]=rs.getString("Cantidad");
+                fila[4]=rs.getString("Costo");
+                fila[5]=rs.getString("F_Entrada");
+                fila[6]=rs.getString("F_Caducidad");                               
+                model.addRow(fila);                        
+            }  
+            Tabla.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
