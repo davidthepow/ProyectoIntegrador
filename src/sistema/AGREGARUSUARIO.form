@@ -30,13 +30,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="b_nuevo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="b_agregar" min="-2" max="-2" attributes="0"/>
+                      <Component id="b_guardar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="b_modificar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -59,7 +59,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="b_nuevo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="b_agregar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="b_guardar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="b_modificar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="b_eliminar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -108,10 +108,10 @@
                           </Group>
                           <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="usu" pref="117" max="32767" attributes="0"/>
+                              <Component id="usuario" pref="117" max="32767" attributes="0"/>
                               <Component id="a_mater" alignment="0" max="32767" attributes="0"/>
                               <Component id="edad" alignment="0" max="32767" attributes="0"/>
-                              <Component id="tel" alignment="0" max="32767" attributes="0"/>
+                              <Component id="telefono" alignment="0" max="32767" attributes="0"/>
                               <Component id="sexo" max="32767" attributes="0"/>
                               <Component id="email" alignment="0" max="32767" attributes="0"/>
                           </Group>
@@ -127,7 +127,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="usu" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="usuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -157,7 +157,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="telefono" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -169,7 +169,7 @@
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                       <Component id="email" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="53" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -200,7 +200,7 @@
             <Property name="text" type="java.lang.String" value="Nombre"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="usu">
+        <Component class="javax.swing.JTextField" name="usuario">
         </Component>
         <Component class="javax.swing.JTextField" name="a_mater">
         </Component>
@@ -235,7 +235,7 @@
             <Property name="text" type="java.lang.String" value="Correo"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tel">
+        <Component class="javax.swing.JTextField" name="telefono">
         </Component>
         <Component class="javax.swing.JTextField" name="sexo">
         </Component>
@@ -251,12 +251,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="b_nuevoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="b_agregar">
+    <Component class="javax.swing.JButton" name="b_guardar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar"/>
+        <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="b_agregarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="b_guardarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="b_modificar">

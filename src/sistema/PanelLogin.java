@@ -5,7 +5,6 @@
  */
 package sistema;
 
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**

@@ -22,8 +22,8 @@ Statement sent;
        initComponents();
         con = Conexion.geConnection(); //Realizar la conexion a la base de datos
         desabilitar(); // Desabilitar el campo de texto 
-       
-        b_agregar.setEnabled(false); // bloquear e boton agregar
+       mostrar();
+        b_guardar.setEnabled(false); // bloquear e boton agregar
     }
 
     @SuppressWarnings("unchecked")
@@ -36,7 +36,7 @@ Statement sent;
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        usu = new javax.swing.JTextField();
+        usuario = new javax.swing.JTextField();
         a_mater = new javax.swing.JTextField();
         edad = new javax.swing.JTextField();
         contra = new javax.swing.JTextField();
@@ -46,11 +46,11 @@ Statement sent;
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        tel = new javax.swing.JTextField();
+        telefono = new javax.swing.JTextField();
         sexo = new javax.swing.JTextField();
         email = new javax.swing.JTextField();
         b_nuevo = new javax.swing.JButton();
-        b_agregar = new javax.swing.JButton();
+        b_guardar = new javax.swing.JButton();
         b_modificar = new javax.swing.JButton();
         b_eliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -113,10 +113,10 @@ Statement sent;
                             .addComponent(jLabel9))
                         .addGap(11, 11, 11)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usu, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                             .addComponent(a_mater)
                             .addComponent(edad)
-                            .addComponent(tel)
+                            .addComponent(telefono)
                             .addComponent(sexo)
                             .addComponent(email))))
                 .addContainerGap())
@@ -127,7 +127,7 @@ Statement sent;
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(usu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -151,7 +151,7 @@ Statement sent;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(tel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -160,7 +160,7 @@ Statement sent;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         b_nuevo.setText("Nuevo");
@@ -170,10 +170,10 @@ Statement sent;
             }
         });
 
-        b_agregar.setText("Agregar");
-        b_agregar.addActionListener(new java.awt.event.ActionListener() {
+        b_guardar.setText("Guardar");
+        b_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_agregarActionPerformed(evt);
+                b_guardarActionPerformed(evt);
             }
         });
 
@@ -218,12 +218,12 @@ Statement sent;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(b_nuevo)
                         .addGap(18, 18, 18)
-                        .addComponent(b_agregar)
+                        .addComponent(b_guardar)
                         .addGap(18, 18, 18)
                         .addComponent(b_modificar)
                         .addGap(18, 18, 18)
@@ -241,7 +241,7 @@ Statement sent;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_nuevo)
-                    .addComponent(b_agregar)
+                    .addComponent(b_guardar)
                     .addComponent(b_modificar)
                     .addComponent(b_eliminar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -252,26 +252,46 @@ Statement sent;
     }// </editor-fold>//GEN-END:initComponents
 
     private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
-      
+if (evt.getButton()==1){
+            int fila = Tabla.getSelectedRow();
+            try {
+                habilitar();
+                String sql = "SELECT * FROM ag_user WHERE IDagregar="+Tabla.getValueAt(fila, 0); 
+                sent = con.createStatement();
+                ResultSet rs = sent.executeQuery(sql);
+                rs.next();
+                usuario.setText(rs.getString("usuarios"));
+                contra.setText(rs.getString("contra"));
+                nombre.setText(rs.getString("nombre"));
+                a_pater.setText(rs.getString("a_pater"));
+                a_mater.setText(rs.getString("a_mater"));
+                edad.setText(rs.getString("edad"));
+                telefono.setText(rs.getString("telefono"));
+                sexo.setText(rs.getString("sexo"));
+                email.setText(rs.getString("correo"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }            
+        }      
     }//GEN-LAST:event_TablaMouseClicked
 
     private void b_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevoActionPerformed
         limpiar();
         habilitar();
-        b_agregar.setEnabled(true);
+        b_guardar.setEnabled(true);
     }//GEN-LAST:event_b_nuevoActionPerformed
 
-    private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
+    private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
        try {
-            String sql = "INSERT INTO `AGREGAR USUARIO`(`IDagregar`, `Usuario`, `Contrasena`, `Nombre`, `Apellido Paterno`, `Apellido Materno`, `Edad`, `Telefono`, `Sexo`, `Correo`) "+ " values(?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO ag_user (usuarios,contra,nombre,a_pater,a_mater,edad,telefono,sexo,correo) "+ " values(?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareCall(sql);
-            ps.setString(1, usu.getText());
+            ps.setString(1, usuario.getText());
             ps.setString(2, contra.getText());
             ps.setString(3, nombre.getText());
             ps.setString(4, a_pater.getText());
             ps.setString(5, a_mater.getText() );
             ps.setString(6, edad.getText());
-            ps.setString(7, tel.getText());
+            ps.setString(7, telefono.getText());
             ps.setString(8, sexo.getText());
             ps.setString(9, email.getText());
             int n = ps.executeUpdate();
@@ -282,35 +302,51 @@ Statement sent;
             JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
         }
         desabilitar();
-        b_agregar.setEnabled(false);
-    }//GEN-LAST:event_b_agregarActionPerformed
+        b_guardar.setEnabled(false);
+    }//GEN-LAST:event_b_guardarActionPerformed
 
     private void b_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_eliminarActionPerformed
-        
+      try {
+            int fila = Tabla.getSelectedRow();
+            String sql = "DELETE FROM ag_user WHERE IDagregar="+Tabla.getValueAt(fila, 0);
+            sent = con.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                mostrar();       
+                JOptionPane.showMessageDialog(null,"Usuario eliminado");
+                limpiar();
+            } 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+        }  
     }//GEN-LAST:event_b_eliminarActionPerformed
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
-        try {
-            String sql = "UPDATE `AGREGAR USUARIO` SET `IDagregar`=[value-1],`Usuario`=[value-2],`Contrasena`=[value-3],`Nombre`=[value-4],`Apellido Paterno`=[value-5],`Apellido Materno`=[value-6],`Edad`=[value-7],`Telefono`=[value-8],`Sexo`=[value-9],`Correo`=[value-10] WHERE 1";
-            PreparedStatement ps = con.prepareCall(sql);
-            ps.setString(1, usu.getText());
+         try {
+            String sql = "UPDATE ag_user SET usuarios=?, contra=?, nombre=?, a_pater=?, a_mater=?, edad=?, telefono=?, sexo=?,correo=?"+"WHERE IDagregar=?";
+            int fila = Tabla.getSelectedRow();
+            String dao =(String)Tabla.getValueAt(fila, 0);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, usuario.getText());
             ps.setString(2, contra.getText());
             ps.setString(3, nombre.getText());
             ps.setString(4, a_pater.getText());
-            ps.setString(5, a_mater.getText() );
+            ps.setString(5, a_mater.getText());
             ps.setString(6, edad.getText());
-            ps.setString(7, tel.getText());
+            ps.setString(7, telefono.getText());
             ps.setString(8, sexo.getText());
             ps.setString(9, email.getText());
+            ps.setString(10, dao);
+            
             int n = ps.executeUpdate();
-            if (n>0) {
-                JOptionPane.showMessageDialog(null,"Usuario agregado correctamente");
-            }
+            if(n>0){
+                limpiar();
+                mostrar();
+                JOptionPane.showMessageDialog(null,"Usuario modificado");
+            }                
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+             JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
         }
-        desabilitar();
-        b_agregar.setEnabled(false);
     }//GEN-LAST:event_b_modificarActionPerformed
 
     private void edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edadActionPerformed
@@ -363,8 +399,8 @@ Statement sent;
     private javax.swing.JTable Tabla;
     private javax.swing.JTextField a_mater;
     private javax.swing.JTextField a_pater;
-    private javax.swing.JButton b_agregar;
     private javax.swing.JButton b_eliminar;
+    private javax.swing.JButton b_guardar;
     private javax.swing.JButton b_modificar;
     private javax.swing.JButton b_nuevo;
     private javax.swing.JTextField contra;
@@ -383,44 +419,73 @@ Statement sent;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField sexo;
-    private javax.swing.JTextField tel;
-    private javax.swing.JTextField usu;
+    private javax.swing.JTextField telefono;
+    private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 
     private void habilitar() { // Codigo para habilitar y agregar otro usuario
-    usu.setEditable(true);
+    usuario.setEditable(true);
     a_mater.setEditable(true);
     edad.setEditable(true); 
     contra.setEditable(true); 
     nombre.setEditable(true); 
     a_pater.setEditable(true);
-    tel.setEditable(true);
+    telefono.setEditable(true);
     sexo.setEditable(true);
     email.setEditable(true);    
     }
 
        
     private void desabilitar() { // Codigo para desabilitar y no agregar datos
-        usu.setEditable(false);
+        usuario.setEditable(false);
         a_mater.setEditable(false);
         edad.setEditable(false); 
         contra.setEditable(false); 
         nombre.setEditable(false); 
         a_pater.setEditable(false);
-        tel.setEditable(false);
+        telefono.setEditable(false);
         sexo.setEditable(false);
         email.setEditable(false);
     }
 
     private void limpiar() {
-        usu.setText(null);
+        usuario.setText(null);
         a_mater.setText(null);
         edad.setText(null);
         contra.setText(null);
         nombre.setText(null);
         a_pater.setText(null);
-        tel.setText(null);
+        telefono.setText(null);
         sexo.setText(null);
         email.setText(null);
+    }
+    
+    private void mostrar() { // Codigo para mostrar el contenido en las tablas
+       try {
+            con = Conexion.geConnection();
+            String[]titulos ={"ID Usuario","Usuario","Contraseña","Nombre","Paterno","Materno","Edad","Telefono","Sexo","Correo"};
+            String sql = "SELECT * FROM ag_user";
+            model = new DefaultTableModel(null,titulos);
+            sent = con.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            
+            String []fila=new String[10];
+            while(rs.next()){
+                fila[0]=rs.getString("IDagregar");
+                fila[1]=rs.getString("usuarios");
+                fila[2]=rs.getString("contra");
+                fila[3]=rs.getString("nombre");
+                fila[4]=rs.getString("a_pater");
+                fila[5]=rs.getString("a_mater");
+                fila[6]=rs.getString("edad");  
+                fila[7]=rs.getString("telefono");
+                fila[8]=rs.getString("sexo");
+                fila[9]=rs.getString("correo");
+                model.addRow(fila);                        
+            }  
+            Tabla.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
