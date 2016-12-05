@@ -92,7 +92,7 @@
                           </Group>
                           <EmptySpace min="23" pref="23" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cambio" alignment="1" pref="105" max="32767" attributes="0"/>
+                              <Component id="des" alignment="1" pref="105" max="32767" attributes="0"/>
                               <Component id="pago" max="32767" attributes="0"/>
                               <Component id="fe_entre" max="32767" attributes="0"/>
                           </Group>
@@ -105,7 +105,7 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="clave" max="32767" attributes="0"/>
+                              <Component id="cod" max="32767" attributes="0"/>
                               <Component id="n_prod" max="32767" attributes="0"/>
                               <Component id="cant" max="32767" attributes="0"/>
                           </Group>
@@ -131,7 +131,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="clave" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cod" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -146,7 +146,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cambio" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="des" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -166,7 +166,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cambio"/>
+            <Property name="text" type="java.lang.String" value="Descripcion"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -176,18 +176,18 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Clave"/>
+            <Property name="text" type="java.lang.String" value="Codigo"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fe_entre">
         </Component>
         <Component class="javax.swing.JTextField" name="pago">
         </Component>
-        <Component class="javax.swing.JTextField" name="cambio">
+        <Component class="javax.swing.JTextField" name="des">
         </Component>
         <Component class="javax.swing.JTextField" name="n_prod">
         </Component>
-        <Component class="javax.swing.JTextField" name="clave">
+        <Component class="javax.swing.JTextField" name="cod">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>

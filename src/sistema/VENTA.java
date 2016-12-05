@@ -23,7 +23,7 @@ Statement sent;
         initComponents();
         con = Conexion.geConnection(); //Realizar la conexion a la base de datos
         desabilitar(); // Desabilitar el campo de texto 
-       
+        mostrar();
         b_agregar.setEnabled(false); // bloquear e boton agregar
     }
 
@@ -39,9 +39,9 @@ Statement sent;
         jLabel5 = new javax.swing.JLabel();
         fe_entre = new javax.swing.JTextField();
         pago = new javax.swing.JTextField();
-        cambio = new javax.swing.JTextField();
+        des = new javax.swing.JTextField();
         n_prod = new javax.swing.JTextField();
-        clave = new javax.swing.JTextField();
+        cod = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         cant = new javax.swing.JTextField();
         b_nuevo = new javax.swing.JButton();
@@ -61,11 +61,11 @@ Statement sent;
 
         jLabel2.setText("Pago");
 
-        jLabel3.setText("Cambio");
+        jLabel3.setText("Descripcion");
 
         jLabel4.setText("Nombre Producto");
 
-        jLabel5.setText("Clave");
+        jLabel5.setText("Codigo");
 
         jLabel6.setText("Cantidad");
 
@@ -83,7 +83,7 @@ Statement sent;
                             .addComponent(jLabel3))
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cambio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                            .addComponent(des, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
                             .addComponent(pago)
                             .addComponent(fe_entre)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -93,7 +93,7 @@ Statement sent;
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(clave)
+                            .addComponent(cod)
                             .addComponent(n_prod)
                             .addComponent(cant))))
                 .addContainerGap())
@@ -112,7 +112,7 @@ Statement sent;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(clave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -124,7 +124,7 @@ Statement sent;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cambio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(des, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -217,7 +217,25 @@ Statement sent;
     }// </editor-fold>//GEN-END:initComponents
 
     private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
-      
+    if (evt.getButton()==1){
+            int fila = Tabla.getSelectedRow();
+            try {
+                habilitar();
+                String sql = "SELECT * FROM venta WHERE IDventa="+Tabla.getValueAt(fila, 0); 
+                sent = con.createStatement();
+                ResultSet rs = sent.executeQuery(sql);
+                rs.next();
+                fe_entre.setText(rs.getString("f_entra"));
+                n_prod.setText(rs.getString("num_p"));
+                cod.setText(rs.getString("cod"));
+                cant.setText(rs.getString("can"));
+                pago.setText(rs.getString("precio"));
+                des.setText(rs.getString("des"));
+               
+            } catch (Exception e) {
+                e.printStackTrace();
+            }            
+        }        
     }//GEN-LAST:event_TablaMouseClicked
 
     private void b_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevoActionPerformed
@@ -228,31 +246,65 @@ Statement sent;
 
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
        try {
-            String sql = "INSERT INTO `VENTA`(`Fecha Entrega`, `Nombre Producto`, `Clave`, `Cantidad`, `Pago`, `Cambio`) " + " values(?,?,?,?,?,?)";
+            String sql = "INSERT INTO venta(f_entra, num_p, cod, can, precio, des) " + " values(?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareCall(sql);
             ps.setString(1, fe_entre.getText());
             ps.setString(2, n_prod.getText());
-            ps.setString(3, clave.getText());
+            ps.setString(3, cod.getText());
             ps.setString(4, cant.getText());
             ps.setString(5, pago.getText() );
-            ps.setString(6, cambio.getText());
+            ps.setString(6, des.getText());
             int n = ps.executeUpdate();
             if (n>0) {
-                JOptionPane.showMessageDialog(null,"Producto agregado correctamente");
+                JOptionPane.showMessageDialog(null,"Venta agregada correctamente");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
         }
         desabilitar();
+        mostrar();
         b_agregar.setEnabled(false);
     }//GEN-LAST:event_b_agregarActionPerformed
 
     private void b_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_eliminarActionPerformed
-        
+        try {
+            int fila = Tabla.getSelectedRow();
+            String sql = "DELETE FROM venta WHERE IDventa="+Tabla.getValueAt(fila, 0);
+            sent = con.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                mostrar();       
+                JOptionPane.showMessageDialog(null,"Venta eliminada");
+                limpiar();
+            } 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+        }  
     }//GEN-LAST:event_b_eliminarActionPerformed
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
-        
+try {
+            String sql = "UPDATE venta SET f_entra=?, num_p=?, cod=?, can=?, precio=?, des=?"+"WHERE IDventa=?";
+            int fila = Tabla.getSelectedRow();
+            String dao =(String)Tabla.getValueAt(fila, 0);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, fe_entre.getText());
+            ps.setString(2, n_prod.getText());
+            ps.setString(3, cod.getText());
+            ps.setString(4, cant.getText());
+            ps.setString(5, pago.getText());
+            ps.setString(6, des.getText());          
+            ps.setString(7, dao);
+            
+            int n = ps.executeUpdate();
+            if(n>0){
+                limpiar();
+                mostrar();
+                JOptionPane.showMessageDialog(null,"Venta Actualizada");
+            }                
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+        }        
     }//GEN-LAST:event_b_modificarActionPerformed
 
     /**
@@ -303,9 +355,9 @@ Statement sent;
     private javax.swing.JButton b_eliminar;
     private javax.swing.JButton b_modificar;
     private javax.swing.JButton b_nuevo;
-    private javax.swing.JTextField cambio;
     private javax.swing.JTextField cant;
-    private javax.swing.JTextField clave;
+    private javax.swing.JTextField cod;
+    private javax.swing.JTextField des;
     private javax.swing.JTextField fe_entre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -322,9 +374,9 @@ Statement sent;
     private void habilitar() { // Codigo para habilitar y agregar otro usuario
     fe_entre.setEditable(true);
     pago.setEditable(true);
-    cambio.setEditable(true); 
+    des.setEditable(true); 
     n_prod.setEditable(true); 
-    clave.setEditable(true); 
+    cod.setEditable(true); 
     cant.setEditable(true);
     }
 
@@ -332,18 +384,44 @@ Statement sent;
     private void desabilitar() { // Codigo para desabilitar y no agregar datos
         fe_entre.setEditable(false);
         pago.setEditable(false);
-        cambio.setEditable(false); 
+        des.setEditable(false); 
         n_prod.setEditable(false); 
-        clave.setEditable(false); 
+        cod.setEditable(false); 
         cant.setEditable(false);
     }
 
     private void limpiar() {
         fe_entre.setText(null);
         pago.setText(null);
-        cambio.setText(null);
+        des.setText(null);
         n_prod.setText(null);
-        clave.setText(null);
+        cod.setText(null);
         cant.setText(null);
+    }
+     private void mostrar() { // Codigo para mostrar el contenido en las tablas
+       try {
+            con = Conexion.geConnection();
+            String[]titulos ={"ID Venta","Fecha de Entrada","No:Producto","Codigo","Cantidad","Pago","Descripcion"};
+            String sql = "SELECT * FROM venta";
+            model = new DefaultTableModel(null,titulos);
+            sent = con.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            
+            String []fila=new String[7];
+            while(rs.next()){
+                fila[0]=rs.getString("IDventa");
+                fila[1]=rs.getString("f_entra");
+                fila[2]=rs.getString("num_p");
+                fila[3]=rs.getString("cod");
+                fila[4]=rs.getString("can");
+                fila[5]=rs.getString("precio");
+                fila[6]=rs.getString("des");  
+                
+                model.addRow(fila);                        
+            }  
+            Tabla.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
