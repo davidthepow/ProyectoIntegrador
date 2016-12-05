@@ -43,6 +43,8 @@ Statement sent;
         cantidad = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         costo = new javax.swing.JTextField();
+        des = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         b_nuevo = new javax.swing.JButton();
         b_agregar = new javax.swing.JButton();
         b_modificar = new javax.swing.JButton();
@@ -62,9 +64,9 @@ Statement sent;
 
         jLabel3.setText("Fecha de Caducidad");
 
-        jLabel4.setText("Clave");
+        jLabel4.setText("Precio/KG");
 
-        jLabel5.setText("Cantidad");
+        jLabel5.setText("UNIDAD/KG");
 
         fecha_cad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +76,8 @@ Statement sent;
 
         jLabel6.setText("Costo");
 
+        jLabel7.setText("Descripcion");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -81,26 +85,29 @@ Statement sent;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(n_pro, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                            .addComponent(fecha)
-                            .addComponent(fecha_cad)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel4)
                             .addComponent(jLabel6))
-                        .addGap(68, 68, 68)
+                        .addGap(55, 55, 55)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cantidad, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cantidad)
                             .addComponent(clave)
-                            .addComponent(costo))))
+                            .addComponent(costo)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(n_pro, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(fecha)
+                            .addComponent(fecha_cad)
+                            .addComponent(des))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -130,7 +137,11 @@ Statement sent;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(fecha_cad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(des, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addContainerGap())
         );
 
         b_nuevo.setText("Nuevo");
@@ -147,7 +158,7 @@ Statement sent;
             }
         });
 
-        b_modificar.setText("Modificar");
+        b_modificar.setText("Actualizar");
         b_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_modificarActionPerformed(evt);
@@ -198,7 +209,7 @@ Statement sent;
                         .addComponent(b_modificar)
                         .addGap(18, 18, 18)
                         .addComponent(b_eliminar)
-                        .addGap(0, 263, Short.MAX_VALUE)))
+                        .addGap(0, 258, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -206,15 +217,15 @@ Statement sent;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_nuevo)
                     .addComponent(b_agregar)
                     .addComponent(b_modificar)
                     .addComponent(b_eliminar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
 
         pack();
@@ -222,7 +233,26 @@ Statement sent;
     }// </editor-fold>//GEN-END:initComponents
 
     private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
-      
+        if (evt.getButton()==1){
+            int fila = Tabla.getSelectedRow();
+            try {
+                habilitar();
+                String sql = "SELECT * FROM productos WHERE IDprod="+Tabla.getValueAt(fila, 0); 
+                sent = con.createStatement();
+                ResultSet rs = sent.executeQuery(sql);
+                rs.next();
+                n_pro.setText(rs.getString("n_prod"));
+                clave.setText(rs.getString("p_kg"));
+                cantidad.setText(rs.getString("u_kg"));
+                costo.setText(rs.getString("cost"));
+                fecha.setText(rs.getString("f_entra"));
+                fecha_cad.setText(rs.getString("f_Cad"));
+                des.setText(rs.getString("des"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }            
+        }          
+        
     }//GEN-LAST:event_TablaMouseClicked
 
     private void b_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevoActionPerformed
@@ -233,7 +263,7 @@ Statement sent;
 
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
        try {
-            String sql = "INSERT INTO A_PRODUCTO(N_Producto, P_Kilos, U_Kilo, Costo, F_Entrada, F_Caducidad) " + " values(?,?,?,?,?,?)"; 
+            String sql = "INSERT INTO productos(n_prod, p_kg, u_kg, cost, f_entra, f_cad, des) " + " values(?,?,?,?,?,?,?)"; 
             PreparedStatement ps = con.prepareCall(sql);
             ps.setString(1, n_pro.getText());
             ps.setString(2, clave.getText());
@@ -241,6 +271,7 @@ Statement sent;
             ps.setString(4, costo.getText());
             ps.setString(5, fecha.getText() );
             ps.setString(6, fecha_cad.getText());
+            ps.setString(7, des.getText());
             int n = ps.executeUpdate();
             if (n>0) {
                 JOptionPane.showMessageDialog(null,"Producto agregado correctamente");
@@ -250,15 +281,52 @@ Statement sent;
         }
         desabilitar();
         limpiar();
+        mostrar();
         b_agregar.setEnabled(false);
     }//GEN-LAST:event_b_agregarActionPerformed
 
     private void b_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_eliminarActionPerformed
-        
+         try {
+            int fila = Tabla.getSelectedRow();
+            String sql = "DELETE FROM productos WHERE IDprod="+Tabla.getValueAt(fila, 0);
+            sent = con.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                mostrar();       
+                JOptionPane.showMessageDialog(null,"Producto eliminado");
+                limpiar();
+            } 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+        }  
+                                          
+
     }//GEN-LAST:event_b_eliminarActionPerformed
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
-        
+             try {
+            String sql = "UPDATE productos SET n_prod=?, p_kg=?, u_kg=?, cost=?, f_entra=?, f_Cad=?, des=?"+"WHERE IDprod=?";
+            int fila = Tabla.getSelectedRow();
+            String dao =(String)Tabla.getValueAt(fila, 0);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, n_pro.getText());
+            ps.setString(2, clave.getText());
+            ps.setString(3, cantidad.getText());
+            ps.setString(4, costo.getText());
+            ps.setString(5, fecha.getText());
+            ps.setString(6, fecha_cad.getText());
+            ps.setString(7, des.getText());
+            ps.setString(8, dao);
+            
+            int n = ps.executeUpdate();
+            if(n>0){
+                limpiar();
+                mostrar();
+                JOptionPane.showMessageDialog(null,"Usuario modificado");
+            }                
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+        }
     }//GEN-LAST:event_b_modificarActionPerformed
 
     private void fecha_cadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecha_cadActionPerformed
@@ -312,6 +380,7 @@ Statement sent;
     private javax.swing.JTextField cantidad;
     private javax.swing.JTextField clave;
     private javax.swing.JTextField costo;
+    private javax.swing.JTextField des;
     private javax.swing.JTextField fecha;
     private javax.swing.JTextField fecha_cad;
     private javax.swing.JLabel jLabel1;
@@ -320,6 +389,7 @@ Statement sent;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField n_pro;
@@ -332,6 +402,7 @@ Statement sent;
     clave.setEditable(true); 
     cantidad.setEditable(true); 
     costo.setEditable(true);
+    des.setEditable(true);
     }
        
     private void desabilitar() { // Codigo para desabilitar y no agregar datos
@@ -350,26 +421,28 @@ Statement sent;
         clave.setText(null);
         cantidad.setText(null);
         costo.setText(null);
+        des.setText(null);
     }
     
     private void mostrar() {
        try {
             con = Conexion.geConnection();
-            String[]titulos ={"ID Producto","Nombre del Producto","Clave","Cantidad","Costo","Fecha de Entrada","Fecha de Caducidad"};
-            String sql = "SELECT * FROM A_PRODUCTO";
+            String[]titulos ={"ID Producto","Nombre del Producto","Precio/KG","unidades*KG","Costo","Fecha de Entrada","Fecha de Caducidad","Descripcion"};
+            String sql = "SELECT * FROM productos";
             model = new DefaultTableModel(null,titulos);
             sent = con.createStatement();
             ResultSet rs = sent.executeQuery(sql);
             
-            String []fila=new String[7];
+            String []fila=new String[8];
             while(rs.next()){
-                fila[0]=rs.getString("IDProducto");
-                fila[1]=rs.getString("N_Producto");
-                fila[2]=rs.getString("Clave");
-                fila[3]=rs.getString("Cantidad");
-                fila[4]=rs.getString("Costo");
-                fila[5]=rs.getString("F_Entrada");
-                fila[6]=rs.getString("F_Caducidad");                               
+                fila[0]=rs.getString("IDprod");
+                fila[1]=rs.getString("n_prod");
+                fila[2]=rs.getString("p_kg");
+                fila[3]=rs.getString("u_kg");
+                fila[4]=rs.getString("cost");
+                fila[5]=rs.getString("f_entra");
+                fila[6]=rs.getString("f_Cad"); 
+                fila[7]=rs.getString("des");
                 model.addRow(fila);                        
             }  
             Tabla.setModel(model);
