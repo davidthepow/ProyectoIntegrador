@@ -233,7 +233,7 @@ Statement sent;
 
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
        try {
-            String sql = "INSERT INTO A_PRODUCTO(N_Producto, Clave, Cantidad, Costo, F_Entrada, F_Caducidad) " + " values(?,?,?,?,?,?)";
+            String sql = "INSERT INTO A_PRODUCTO(N_Producto, P_Kilos, U_Kilo, Costo, F_Entrada, F_Caducidad) " + " values(?,?,?,?,?,?)"; 
             PreparedStatement ps = con.prepareCall(sql);
             ps.setString(1, n_pro.getText());
             ps.setString(2, clave.getText());
