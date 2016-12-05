@@ -258,6 +258,7 @@ Statement sent;
     private void b_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevoActionPerformed
         limpiar();
         habilitar();
+        mostrar();
         b_agregar.setEnabled(true);
     }//GEN-LAST:event_b_nuevoActionPerformed
 
@@ -299,7 +300,7 @@ Statement sent;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
         }  
-                                          
+                 mostrar();
 
     }//GEN-LAST:event_b_eliminarActionPerformed
 
@@ -327,6 +328,7 @@ Statement sent;
         } catch (Exception e) {
              JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
         }
+             mostrar();
     }//GEN-LAST:event_b_modificarActionPerformed
 
     private void fecha_cadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecha_cadActionPerformed

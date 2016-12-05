@@ -15,15 +15,17 @@ public class AGREGARUSUARIO extends javax.swing.JFrame {
 DefaultTableModel model;
 Connection con;
 Statement sent;
+
+
     /**
      * Creates new form AgregarCompra
      */
     public AGREGARUSUARIO() {
        initComponents();
-        con = Conexion.geConnection(); //Realizar la conexion a la base de datos
-        desabilitar(); // Desabilitar el campo de texto 
+       con = Conexion.geConnection(); //Realizar la conexion a la base de datos
+       desabilitar(); // Desabilitar el campo de texto 
        mostrar();
-        b_guardar.setEnabled(false); // bloquear e boton agregar
+       b_guardar.setEnabled(false); // bloquear e boton agregar
     }
 
     @SuppressWarnings("unchecked")
@@ -279,6 +281,7 @@ if (evt.getButton()==1){
         limpiar();
         habilitar();
         b_guardar.setEnabled(true);
+        mostrar();
     }//GEN-LAST:event_b_nuevoActionPerformed
 
     private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
@@ -301,6 +304,7 @@ if (evt.getButton()==1){
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
         }
+       mostrar();
         desabilitar();
         b_guardar.setEnabled(false);
     }//GEN-LAST:event_b_guardarActionPerformed
