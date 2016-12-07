@@ -20,6 +20,7 @@ Statement sent;
      */
     public AGREGARPRODUCTO() {
         initComponents();
+        this.setLocationRelativeTo(null);//centrar ventanas
         con = Conexion.geConnection(); //Realizar la conexion a la base de datos
         desabilitar(); // Desabilitar el campo de texto 
         mostrar();
@@ -51,9 +52,9 @@ Statement sent;
         b_eliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
+        b_regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Registro de producto");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Agregar producto"));
@@ -158,7 +159,7 @@ Statement sent;
             }
         });
 
-        b_modificar.setText("Actualizar");
+        b_modificar.setText("Modificar");
         b_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_modificarActionPerformed(evt);
@@ -190,27 +191,39 @@ Statement sent;
         });
         jScrollPane1.setViewportView(Tabla);
 
+        b_regresar.setText("Regresar");
+        b_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_regresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(b_nuevo)
                         .addGap(18, 18, 18)
                         .addComponent(b_agregar)
+                        .addGap(26, 26, 26)
+                        .addComponent(b_regresar)
+                        .addGap(9, 9, 9))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(b_modificar)
-                        .addGap(18, 18, 18)
+                        .addGap(46, 46, 46)
                         .addComponent(b_eliminar)
-                        .addGap(0, 258, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(148, 148, 148))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +237,8 @@ Statement sent;
                     .addComponent(b_nuevo)
                     .addComponent(b_agregar)
                     .addComponent(b_modificar)
-                    .addComponent(b_eliminar))
+                    .addComponent(b_eliminar)
+                    .addComponent(b_regresar))
                 .addGap(36, 36, 36))
         );
 
@@ -335,6 +349,13 @@ Statement sent;
         // TODO add your handling code here:
     }//GEN-LAST:event_fecha_cadActionPerformed
 
+    private void b_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_regresarActionPerformed
+        // TODO add your handling code here:
+        MENU MN = new MENU();
+                 MN.setVisible(true);
+                 dispose();
+    }//GEN-LAST:event_b_regresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -379,6 +400,7 @@ Statement sent;
     private javax.swing.JButton b_eliminar;
     private javax.swing.JButton b_modificar;
     private javax.swing.JButton b_nuevo;
+    private javax.swing.JButton b_regresar;
     private javax.swing.JTextField cantidad;
     private javax.swing.JTextField clave;
     private javax.swing.JTextField costo;

@@ -4,10 +4,15 @@
  * and open the template in the editor.
  */
 package sistema;
+import java.io.FileWriter;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import sistema.Conexion;
+import java.io.*;
+import java.util.ArrayList;
+import reporte.Reportito;
+
 /**
  *
  * @author user
@@ -21,6 +26,7 @@ Statement sent;
      */
     public VENTA() {
         initComponents();
+        this.setLocationRelativeTo(null);//centrar ventanas
         con = Conexion.geConnection(); //Realizar la conexion a la base de datos
         desabilitar(); // Desabilitar el campo de texto 
         mostrar();
@@ -50,12 +56,13 @@ Statement sent;
         b_eliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
+        b_regresar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Registro de producto");
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Agregar producto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Venta"));
 
         jLabel1.setText("Fecha Entrega");
 
@@ -83,7 +90,7 @@ Statement sent;
                             .addComponent(jLabel3))
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(des, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                            .addComponent(des, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(pago)
                             .addComponent(fe_entre)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -174,42 +181,63 @@ Statement sent;
         });
         jScrollPane1.setViewportView(Tabla);
 
+        b_regresar.setText("Regresar");
+        b_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_regresarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Imprimir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(b_nuevo)
-                        .addGap(18, 18, 18)
+                        .addGap(19, 19, 19)
                         .addComponent(b_agregar)
                         .addGap(18, 18, 18)
+                        .addComponent(b_regresar))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(33, 33, 33)
                         .addComponent(b_modificar)
-                        .addGap(18, 18, 18)
+                        .addGap(33, 33, 33)
                         .addComponent(b_eliminar)
-                        .addGap(0, 263, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(153, 153, 153))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_nuevo)
                     .addComponent(b_agregar)
                     .addComponent(b_modificar)
-                    .addComponent(b_eliminar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(b_eliminar)
+                    .addComponent(b_regresar)
+                    .addComponent(jButton1))
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -307,6 +335,81 @@ try {
         }        
     }//GEN-LAST:event_b_modificarActionPerformed
 
+    private void b_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_regresarActionPerformed
+        // TODO add your handling code here:
+        
+        MENU MN = new MENU();
+                 MN.setVisible(true);
+                 dispose();
+    }//GEN-LAST:event_b_regresarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      try {
+            con = Conexion.geConnection();
+            String[]titulos ={"ID Venta","Fecha de Entrada","Numero de Producto","Codigo","Cantidad","Pago","Descripcion"};
+            String sql = "SELECT * FROM venta";
+            sent = con.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            
+            ArrayList<String[]> filas = new ArrayList<String[]>();
+
+            while(rs.next()){
+                String []fila=new String[7];
+                fila[0]=rs.getString("IDventa");
+                fila[1]=rs.getString("f_entra");
+                fila[2]=rs.getString("num_p");
+                fila[3]=rs.getString("cod");
+                fila[4]=rs.getString("can");
+                fila[5]=rs.getString("precio");
+                fila[6]=rs.getString("des");  
+                filas.add(fila);                                        
+            }  
+            
+            File f;
+            f = new File("C:\\Users\\Davidthepow1\\Documents\\GitHub\\PIF\\ProyectoIntegrador\\reporte.json");
+            
+//Escritura
+            try {
+                FileWriter w = new FileWriter(f);
+                BufferedWriter bw = new BufferedWriter(w);
+                PrintWriter wr = new PrintWriter(bw);
+                wr.write("{\"Encabezado\": \"Sistema de Planeación de Recursos\", "
+                        + "\"direccion\": \"calle 59 entre 85 y 87\","
+                        + "\"telefono\": \"982100000\","
+                +"\"rfc\": \"14020160246\","
+                +"\"email\": \"producto@gmail.com\","
+                +"\"List\"[");
+                        
+                for (int i = 0;
+                        i < filas.size(); i++) {
+                    wr.append("\"" + filas.get(i)[6] + "\",");
+                }
+                wr.append("]");
+                wr.append("\"List cantidad\":[");
+
+                for (int i = 0;
+                        i < filas.size(); i++) {
+                    wr.append("\"" + filas.get(i)[4] + "\",");
+                }
+                wr.append("]");
+                wr.append("\"List precios\":[");
+
+                for (int i = 0;
+                        i < filas.size(); i++) {
+                    wr.append("\"" + filas.get(i)[5] + "\",");
+                }
+                wr.append("]}");
+                wr.close();
+                bw.close();
+            } catch (IOException e) {
+            };
+            Reportito re = new Reportito(f,"C:\\Users\\Davidthepow1\\Documents\\GitHub\\PIF\\ProyectoIntegrador\\reporte.pdf");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -355,10 +458,12 @@ try {
     private javax.swing.JButton b_eliminar;
     private javax.swing.JButton b_modificar;
     private javax.swing.JButton b_nuevo;
+    private javax.swing.JButton b_regresar;
     private javax.swing.JTextField cant;
     private javax.swing.JTextField cod;
     private javax.swing.JTextField des;
     private javax.swing.JTextField fe_entre;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -398,6 +503,7 @@ try {
         cod.setText(null);
         cant.setText(null);
     }
+    
      private void mostrar() { // Codigo para mostrar el contenido en las tablas
        try {
             con = Conexion.geConnection();

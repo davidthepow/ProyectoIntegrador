@@ -22,6 +22,7 @@ Statement sent;
      */
     public AGREGARUSUARIO() {
        initComponents();
+       this.setLocationRelativeTo(null);//centrar ventanas
        con = Conexion.geConnection(); //Realizar la conexion a la base de datos
        desabilitar(); // Desabilitar el campo de texto 
        mostrar();
@@ -57,12 +58,12 @@ Statement sent;
         b_eliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
+        b_regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Registro de producto");
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Agregar producto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Agregar Usuario"));
 
         jLabel1.setText("Usuario");
 
@@ -102,7 +103,7 @@ Statement sent;
                             .addComponent(jLabel6))
                         .addGap(13, 13, 13)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(contra)
+                            .addComponent(contra, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                             .addComponent(nombre)
                             .addComponent(a_pater)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -115,7 +116,7 @@ Statement sent;
                             .addComponent(jLabel9))
                         .addGap(11, 11, 11)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(usuario)
                             .addComponent(a_mater)
                             .addComponent(edad)
                             .addComponent(telefono)
@@ -211,6 +212,13 @@ Statement sent;
         });
         jScrollPane1.setViewportView(Tabla);
 
+        b_regresar.setText("Regresar");
+        b_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_regresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,32 +229,35 @@ Statement sent;
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(b_nuevo)
                         .addGap(18, 18, 18)
                         .addComponent(b_guardar)
                         .addGap(18, 18, 18)
+                        .addComponent(b_regresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(b_modificar)
-                        .addGap(18, 18, 18)
+                        .addGap(64, 64, 64)
                         .addComponent(b_eliminar)
-                        .addGap(0, 263, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(156, 156, 156))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_nuevo)
                     .addComponent(b_guardar)
                     .addComponent(b_modificar)
-                    .addComponent(b_eliminar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(b_eliminar)
+                    .addComponent(b_regresar))
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -357,6 +368,14 @@ if (evt.getButton()==1){
         // TODO add your handling code here:
     }//GEN-LAST:event_edadActionPerformed
 
+    private void b_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_regresarActionPerformed
+        // TODO add your handling code here:
+        
+         MENU MN = new MENU();
+                 MN.setVisible(true);
+                 dispose();
+    }//GEN-LAST:event_b_regresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -407,6 +426,7 @@ if (evt.getButton()==1){
     private javax.swing.JButton b_guardar;
     private javax.swing.JButton b_modificar;
     private javax.swing.JButton b_nuevo;
+    private javax.swing.JButton b_regresar;
     private javax.swing.JTextField contra;
     private javax.swing.JTextField edad;
     private javax.swing.JTextField email;
