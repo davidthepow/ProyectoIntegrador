@@ -414,9 +414,9 @@ try {
             }  
             
             File f;
-            f = new File("C:\\Users\\Davidthepow1\\Documents\\GitHub\\PIF\\ProyectoIntegrador\\reporte.json");
+            f = new File("C:\\Program Files\\ProyectoIntegrador\\reporte.json");
             
-//Escritura
+//Escritura 
             try {
                 FileWriter w = new FileWriter(f);
                 BufferedWriter bw = new BufferedWriter(w);
@@ -451,7 +451,7 @@ try {
                 bw.close();
             } catch (IOException e) {
             };
-            Reportito re = new Reportito(f,"C:\\Users\\Davidthepow1\\Documents\\GitHub\\PIF\\ProyectoIntegrador\\reporte.pdf");
+            Reportito re = new Reportito(f,"C:\\Program Files\\ProyectoIntegrador\\reporte.pdf");
         } catch (Exception e) {
             e.printStackTrace();
         }
