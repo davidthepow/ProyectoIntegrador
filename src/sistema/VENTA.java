@@ -10,8 +10,10 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import sistema.Conexion;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import reporte.Reportito;
+import java.util.Date;
 
 /**
  *
@@ -44,12 +46,16 @@ Statement sent;
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         fe_entre = new javax.swing.JTextField();
-        pago = new javax.swing.JTextField();
-        des = new javax.swing.JTextField();
+        pre = new javax.swing.JTextField();
+        subt = new javax.swing.JTextField();
         n_prod = new javax.swing.JTextField();
         cod = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         cant = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        IVA = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        tot = new javax.swing.JTextField();
         b_nuevo = new javax.swing.JButton();
         b_agregar = new javax.swing.JButton();
         b_modificar = new javax.swing.JButton();
@@ -64,17 +70,39 @@ Statement sent;
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Venta"));
 
-        jLabel1.setText("Fecha Entrega");
+        jLabel1.setText("Fecha ");
 
-        jLabel2.setText("Pago");
+        jLabel2.setText("Precio");
 
-        jLabel3.setText("Descripcion");
+        jLabel3.setText("Subtotal");
 
         jLabel4.setText("Nombre Producto");
 
         jLabel5.setText("Codigo");
 
+        subt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subtActionPerformed(evt);
+            }
+        });
+
         jLabel6.setText("Cantidad");
+
+        jLabel7.setText("IVA");
+
+        IVA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IVAActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Total");
+
+        tot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -83,16 +111,6 @@ Statement sent;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(des, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pago)
-                            .addComponent(fe_entre)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -102,7 +120,21 @@ Statement sent;
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cod)
                             .addComponent(n_prod)
-                            .addComponent(cant))))
+                            .addComponent(cant)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(subt, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pre)
+                            .addComponent(fe_entre)
+                            .addComponent(IVA)
+                            .addComponent(tot))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -127,11 +159,19 @@ Statement sent;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(des, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(subt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(IVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(tot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -227,7 +267,7 @@ Statement sent;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -254,11 +294,13 @@ Statement sent;
                 ResultSet rs = sent.executeQuery(sql);
                 rs.next();
                 fe_entre.setText(rs.getString("f_entra"));
-                n_prod.setText(rs.getString("num_p"));
+                n_prod.setText(rs.getString("nom_p"));
                 cod.setText(rs.getString("cod"));
                 cant.setText(rs.getString("can"));
-                pago.setText(rs.getString("precio"));
-                des.setText(rs.getString("des"));
+                pre.setText(rs.getString("precio"));
+                subt.setText(rs.getString("subt"));
+                IVA.setText(rs.getString("iva"));
+                tot.setText(rs.getString("t_total"));
                
             } catch (Exception e) {
                 e.printStackTrace();
@@ -269,19 +311,23 @@ Statement sent;
     private void b_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevoActionPerformed
         limpiar();
         habilitar();
+        fe_entre.setText(fecha());
         b_agregar.setEnabled(true);
     }//GEN-LAST:event_b_nuevoActionPerformed
 
     private void b_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_agregarActionPerformed
        try {
-            String sql = "INSERT INTO venta(f_entra, num_p, cod, can, precio, des) " + " values(?,?,?,?,?,?)";
+            String sql = "INSERT INTO venta(f_entra, nom_p, cod, can, precio, subt,iva,	t_total) " + " values(?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareCall(sql);
             ps.setString(1, fe_entre.getText());
             ps.setString(2, n_prod.getText());
             ps.setString(3, cod.getText());
             ps.setString(4, cant.getText());
-            ps.setString(5, pago.getText() );
-            ps.setString(6, des.getText());
+            ps.setString(5, pre.getText() );
+            ps.setString(6, subt.getText());
+            ps.setString(7, IVA.getText());
+            ps.setString(8, tot.getText());
+            
             int n = ps.executeUpdate();
             if (n>0) {
                 JOptionPane.showMessageDialog(null,"Venta agregada correctamente");
@@ -312,7 +358,7 @@ Statement sent;
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
 try {
-            String sql = "UPDATE venta SET f_entra=?, num_p=?, cod=?, can=?, precio=?, des=?"+"WHERE IDventa=?";
+            String sql = "UPDATE venta SET f_entra=?, nom_p=?, cod=?, can=?, precio=?, subt=?, iva=?,t_total=?"+"WHERE IDventa=?";
             int fila = Tabla.getSelectedRow();
             String dao =(String)Tabla.getValueAt(fila, 0);
             PreparedStatement ps = con.prepareStatement(sql);
@@ -320,9 +366,11 @@ try {
             ps.setString(2, n_prod.getText());
             ps.setString(3, cod.getText());
             ps.setString(4, cant.getText());
-            ps.setString(5, pago.getText());
-            ps.setString(6, des.getText());          
-            ps.setString(7, dao);
+            ps.setString(5, pre.getText());
+            ps.setString(6, subt.getText());
+            ps.setString(7, IVA.getText());
+            ps.setString(8, tot.getText());
+            ps.setString(9, dao);
             
             int n = ps.executeUpdate();
             if(n>0){
@@ -410,6 +458,41 @@ try {
     
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void subtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subtActionPerformed
+        try {
+            float precio, cantidad, subtotal;
+            precio = Float.parseFloat(pre.getText());
+            cantidad = Float.parseFloat(cant.getText());
+            subtotal = precio * cantidad;
+            subt.setText(String.valueOf(subtotal));
+        } catch (Exception e) {
+            
+        } 
+    }//GEN-LAST:event_subtActionPerformed
+
+    private void totActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totActionPerformed
+       try {
+            float subtotal, iva, total;
+            subtotal = Float.parseFloat(subt.getText());
+            iva = Float.parseFloat(IVA.getText());
+            total = iva + subtotal;
+            tot.setText(String.valueOf(total));
+        } catch (Exception e) {
+            
+        } 
+    }//GEN-LAST:event_totActionPerformed
+
+    private void IVAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IVAActionPerformed
+          try {
+            float  subtotal, iva;
+            subtotal= Float.parseFloat(subt.getText());          
+            iva = (subtotal * 16)/100;
+            IVA.setText(String.valueOf(iva));
+        } catch (Exception e) {
+            
+        } 
+    }//GEN-LAST:event_IVAActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -453,6 +536,7 @@ try {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField IVA;
     private javax.swing.JTable Tabla;
     private javax.swing.JButton b_agregar;
     private javax.swing.JButton b_eliminar;
@@ -461,7 +545,6 @@ try {
     private javax.swing.JButton b_regresar;
     private javax.swing.JTextField cant;
     private javax.swing.JTextField cod;
-    private javax.swing.JTextField des;
     private javax.swing.JTextField fe_entre;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -470,16 +553,20 @@ try {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField n_prod;
-    private javax.swing.JTextField pago;
+    private javax.swing.JTextField pre;
+    private javax.swing.JTextField subt;
+    private javax.swing.JTextField tot;
     // End of variables declaration//GEN-END:variables
 
     private void habilitar() { // Codigo para habilitar y agregar otro usuario
     fe_entre.setEditable(true);
-    pago.setEditable(true);
-    des.setEditable(true); 
+    pre.setEditable(true);
+    subt.setEditable(true); 
     n_prod.setEditable(true); 
     cod.setEditable(true); 
     cant.setEditable(true);
@@ -488,8 +575,8 @@ try {
        
     private void desabilitar() { // Codigo para desabilitar y no agregar datos
         fe_entre.setEditable(false);
-        pago.setEditable(false);
-        des.setEditable(false); 
+        pre.setEditable(false);
+        subt.setEditable(false); 
         n_prod.setEditable(false); 
         cod.setEditable(false); 
         cant.setEditable(false);
@@ -497,8 +584,8 @@ try {
 
     private void limpiar() {
         fe_entre.setText(null);
-        pago.setText(null);
-        des.setText(null);
+        pre.setText(null);
+        subt.setText(null);
         n_prod.setText(null);
         cod.setText(null);
         cant.setText(null);
@@ -507,21 +594,23 @@ try {
      private void mostrar() { // Codigo para mostrar el contenido en las tablas
        try {
             con = Conexion.geConnection();
-            String[]titulos ={"ID Venta","Fecha de Entrada","No:Producto","Codigo","Cantidad","Pago","Descripcion"};
+            String[]titulos ={"ID Venta","Fecha de Entrada","No:Producto","Codigo","Cantidad","Precio","Subtotal","IVA","Total"};
             String sql = "SELECT * FROM venta";
             model = new DefaultTableModel(null,titulos);
             sent = con.createStatement();
             ResultSet rs = sent.executeQuery(sql);
             
-            String []fila=new String[7];
+            String []fila=new String[9];
             while(rs.next()){
                 fila[0]=rs.getString("IDventa");
                 fila[1]=rs.getString("f_entra");
-                fila[2]=rs.getString("num_p");
+                fila[2]=rs.getString("nom_p");
                 fila[3]=rs.getString("cod");
                 fila[4]=rs.getString("can");
                 fila[5]=rs.getString("precio");
-                fila[6]=rs.getString("des");  
+                fila[6]=rs.getString("subt");  
+                fila[7]=rs.getString("iva");
+                fila[8]=rs.getString("t_total");
                 
                 model.addRow(fila);                        
             }  
@@ -530,4 +619,9 @@ try {
             e.printStackTrace();
         }
     }
+     private String fecha(){
+         Date fecha = new Date();
+         SimpleDateFormat formatofecha = new SimpleDateFormat("YYYY/MM/dd");
+         return formatofecha.format(fecha);
+     }
 }

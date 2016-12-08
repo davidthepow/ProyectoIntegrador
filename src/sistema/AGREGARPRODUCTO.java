@@ -239,7 +239,7 @@ Statement sent;
                     .addComponent(b_modificar)
                     .addComponent(b_eliminar)
                     .addComponent(b_regresar))
-                .addGap(36, 36, 36))
+                .addContainerGap())
         );
 
         pack();
