@@ -24,8 +24,8 @@ public class Conexion {
     
     static String bd = "sistema"; //mencionasmos la base de datos
     static String login = "root"; //mencionamos el usuario
-    static String pass = ""; // mencionamos la contraseña
-    static String url = "jdbc:mysql://localhost/"+bd; // hacemos la conexion    
+    static String pass = "bares123"; // mencionamos la contraseña
+    static String url = "jdbc:mysql://130.211.202.183/"+bd; // hacemos la conexion    
     static Connection con; // nombramos el conector
     
     
