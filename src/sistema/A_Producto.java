@@ -5,17 +5,29 @@
  */
 package sistema;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author user
  */
 public class A_Producto extends javax.swing.JFrame {
+        DefaultTableModel model;
+        Connection con;
+        Statement sent;
 
     /**
      * Creates new form A_Producto
      */
     public A_Producto() {
         initComponents();
+        mostrar();
     }
 
     /**
@@ -28,12 +40,10 @@ public class A_Producto extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        P_ID = new javax.swing.JTextField();
         p_proveedor = new javax.swing.JTextField();
         p_producto = new javax.swing.JTextField();
         p_origen = new javax.swing.JTextField();
@@ -43,12 +53,12 @@ public class A_Producto extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        Hora = new javax.swing.JLabel();
+        jLabel09 = new javax.swing.JLabel();
         p_entradames = new javax.swing.JTextField();
         p_folio = new javax.swing.JTextField();
         p_pesokg = new javax.swing.JTextField();
-        p_estatus = new javax.swing.JTextField();
-        p_descri = new javax.swing.JTextField();
+        p_fechap = new javax.swing.JTextField();
+        p_horap = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -56,12 +66,12 @@ public class A_Producto extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        p_salida = new javax.swing.JTextField();
+        p_pesobruto = new javax.swing.JTextField();
+        p_pesotara = new javax.swing.JTextField();
+        p_pesoneto = new javax.swing.JTextField();
+        p_fechas = new javax.swing.JTextField();
+        p_horas = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
         b_nuevo = new javax.swing.JButton();
@@ -74,8 +84,6 @@ public class A_Producto extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Generales"));
 
-        jLabel1.setText("ID");
-
         jLabel2.setText("Proveedor");
 
         jLabel3.setText("Producto");
@@ -83,6 +91,12 @@ public class A_Producto extends javax.swing.JFrame {
         jLabel4.setText("Origen");
 
         jLabel5.setText("Destino");
+
+        p_destino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_destinoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,14 +111,12 @@ public class A_Producto extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(p_origen)
                             .addComponent(p_producto)
-                            .addComponent(P_ID)
                             .addComponent(p_proveedor))))
                 .addContainerGap())
         );
@@ -113,21 +125,17 @@ public class A_Producto extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(P_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(p_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(p_producto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(p_origen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(p_destino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -144,7 +152,19 @@ public class A_Producto extends javax.swing.JFrame {
 
         jLabel9.setText("Fecha");
 
-        Hora.setText("Descripción");
+        jLabel09.setText("Hora");
+
+        p_fechap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_fechapActionPerformed(evt);
+            }
+        });
+
+        p_horap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_horapActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -157,7 +177,7 @@ public class A_Producto extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9)
-                    .addComponent(Hora))
+                    .addComponent(jLabel09))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -165,9 +185,9 @@ public class A_Producto extends javax.swing.JFrame {
                             .addComponent(p_pesokg)
                             .addComponent(p_folio)
                             .addComponent(p_entradames)
-                            .addComponent(p_estatus, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+                            .addComponent(p_fechap, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(p_descri))
+                    .addComponent(p_horap))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -188,11 +208,11 @@ public class A_Producto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(p_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(p_fechap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(p_descri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Hora))
+                    .addComponent(p_horap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel09))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -210,6 +230,18 @@ public class A_Producto extends javax.swing.JFrame {
 
         jLabel15.setText("Hora");
 
+        p_fechas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_fechasActionPerformed(evt);
+            }
+        });
+
+        p_horas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_horasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -224,12 +256,12 @@ public class A_Producto extends javax.swing.JFrame {
                     .addComponent(jLabel15))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField4)
-                    .addComponent(jTextField5)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField1))
+                    .addComponent(p_pesobruto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                    .addComponent(p_pesotara)
+                    .addComponent(p_pesoneto)
+                    .addComponent(p_fechas)
+                    .addComponent(p_horas, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(p_salida))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -238,27 +270,27 @@ public class A_Producto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(p_salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(p_pesobruto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(p_pesotara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(p_pesoneto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(p_fechas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(p_horas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -281,10 +313,25 @@ public class A_Producto extends javax.swing.JFrame {
         jScrollPane1.setViewportView(Tabla);
 
         b_nuevo.setText("Nuevo");
+        b_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_nuevoActionPerformed(evt);
+            }
+        });
 
         b_guardar.setText("Guardar");
+        b_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_guardarActionPerformed(evt);
+            }
+        });
 
         b_eliminar.setText("Eliminar");
+        b_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_eliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -343,6 +390,91 @@ public class A_Producto extends javax.swing.JFrame {
 
     }//GEN-LAST:event_TablaMouseClicked
 
+    private void b_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevoActionPerformed
+        limpiar();
+        habilitar();
+        mostrar();
+        b_nuevo.setEnabled(true);
+    }//GEN-LAST:event_b_nuevoActionPerformed
+
+    private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
+        try {
+            String sql = "INSERT INTO productos(p_prove, p_prod, p_ori, p_des, p_enda, p_folio, p_peso, p_fechap, p_horap, p_salida, p_pebru, p_peta, p_pene, p_fechas, p_horas) " + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; 
+            PreparedStatement ps = con.prepareCall(sql);
+            ps.setString(1, p_proveedor.getText());
+            ps.setString(2, p_producto.getText());
+            ps.setString(3, p_origen.getText());
+            ps.setString(4, p_destino.getText());
+            ps.setString(5, p_entradames.getText() );
+            ps.setString(6, p_folio.getText());
+            ps.setString(7, p_pesokg.getText());
+            ps.setString(8, p_fechap.getText());
+            ps.setString(9, p_horap.getText());
+            ps.setString(10, p_salida.getText());
+            ps.setString(11, p_pesobruto.getText());
+            ps.setString(12, p_pesotara.getText());
+            ps.setString(13, p_pesoneto.getText());
+            ps.setString(14, p_fechas.getText());
+            ps.setString(15, p_horas.getText());
+            int n = ps.executeUpdate();
+            if (n>0) {
+                JOptionPane.showMessageDialog(null,"Producto agregado correctamente");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+        }
+        desabilitar();
+        limpiar();
+        mostrar();
+        b_guardar.setEnabled(false);
+    }//GEN-LAST:event_b_guardarActionPerformed
+
+    private void b_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_eliminarActionPerformed
+        try {
+            int fila = Tabla.getSelectedRow();
+            String sql = "DELETE FROM productos WHERE IDprod="+Tabla.getValueAt(fila, 0);
+            sent = con.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                mostrar();       
+                JOptionPane.showMessageDialog(null,"Producto eliminado");
+                limpiar();
+            } 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+        }  
+                 mostrar();
+
+    }//GEN-LAST:event_b_eliminarActionPerformed
+
+    private void p_destinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_destinoActionPerformed
+        p_destino.setText("Planta Extractora de Aceite 'Don Jorge Mena Perez'");
+    }//GEN-LAST:event_p_destinoActionPerformed
+
+    private void p_fechapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_fechapActionPerformed
+         Calendar Cal= Calendar.getInstance();
+         String fecha= Cal.get(Cal.YEAR)+"/"+(Cal.get(Cal.MONTH)+1)+"/"+Cal.get(Cal.DATE);
+         p_fechap.setText(fecha);
+    }//GEN-LAST:event_p_fechapActionPerformed
+
+    private void p_horapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_horapActionPerformed
+        Calendar Cal= Calendar.getInstance();
+        String hora= Cal.get(Cal.HOUR_OF_DAY)+":"+Cal.get(Cal.MINUTE)+":"+Cal.get(Cal.SECOND);
+        p_horap.setText(hora);
+    }//GEN-LAST:event_p_horapActionPerformed
+
+    private void p_fechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_fechasActionPerformed
+        Calendar Cal= Calendar.getInstance();
+         String fecha= Cal.get(Cal.YEAR)+"/"+(Cal.get(Cal.MONTH)+1)+"/"+Cal.get(Cal.DATE);
+         p_fechas.setText(fecha);
+    }//GEN-LAST:event_p_fechasActionPerformed
+
+    private void p_horasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_horasActionPerformed
+        Calendar Cal= Calendar.getInstance();
+        String hora= Cal.get(Cal.HOUR_OF_DAY)+":"+Cal.get(Cal.MINUTE)+":"+Cal.get(Cal.SECOND);
+        p_horas.setText(hora);
+    }//GEN-LAST:event_p_horasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -379,13 +511,11 @@ public class A_Producto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Hora;
-    private javax.swing.JTextField P_ID;
     private javax.swing.JTable Tabla;
     private javax.swing.JButton b_eliminar;
     private javax.swing.JButton b_guardar;
     private javax.swing.JButton b_nuevo;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel09;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -404,20 +534,112 @@ public class A_Producto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField p_descri;
     private javax.swing.JTextField p_destino;
     private javax.swing.JTextField p_entradames;
-    private javax.swing.JTextField p_estatus;
+    private javax.swing.JTextField p_fechap;
+    private javax.swing.JTextField p_fechas;
     private javax.swing.JTextField p_folio;
+    private javax.swing.JTextField p_horap;
+    private javax.swing.JTextField p_horas;
     private javax.swing.JTextField p_origen;
+    private javax.swing.JTextField p_pesobruto;
     private javax.swing.JTextField p_pesokg;
+    private javax.swing.JTextField p_pesoneto;
+    private javax.swing.JTextField p_pesotara;
     private javax.swing.JTextField p_producto;
     private javax.swing.JTextField p_proveedor;
+    private javax.swing.JTextField p_salida;
     // End of variables declaration//GEN-END:variables
+
+    private void limpiar() {
+        p_destino.setText(null);
+        p_entradames.setText(null);
+        p_fechap.setText(null);
+        p_fechas.setText(null);
+        p_folio.setText(null);
+        p_horap.setText(null);
+        p_horas.setText(null);
+        p_origen.setText(null);
+        p_pesobruto.setText(null);
+        p_pesokg.setText(null);
+        p_pesoneto.setText(null);
+        p_pesotara.setText(null);
+        p_producto.setText(null);
+        p_proveedor.setText(null);
+        p_salida.setText(null);
+    }
+
+    private void habilitar() {
+        p_destino.setEditable(true);
+        p_entradames.setEditable(true);
+        p_fechap.setEditable(true);
+        p_fechas.setEditable(true);
+        p_folio.setEditable(true);
+        p_horap.setEditable(true);
+        p_horas.setEditable(true);
+        p_origen.setEditable(true);
+        p_pesobruto.setEditable(true);
+        p_pesokg.setEditable(true);
+        p_pesoneto.setEditable(true);
+        p_pesotara.setEditable(true);
+        p_producto.setEditable(true);
+        p_proveedor.setEditable(true);
+        p_salida.setEditable(true);
+    }
+
+    private void mostrar() {
+        try {
+            con = Conexion.geConnection();
+            String[]titulos ={"ID","Proveedor","Producto","Origen","Destino","Entrada del mes","Folio","Peso (KG)","Fecha","Hora","Salida No.","Peso Bruto (KG)","Peso Tara (KG)","Peso Neto (KG)","Fecha","Hora"};
+            String sql = "SELECT * FROM productos";
+            model = new DefaultTableModel(null,titulos);
+            sent = con.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            
+            String []fila=new String[16];
+            while(rs.next()){
+                fila[0]=rs.getString("IDprod");
+                fila[1]=rs.getString("p_prove");
+                fila[2]=rs.getString("p_prod");
+                fila[3]=rs.getString("p_ori");
+                fila[4]=rs.getString("p_des");
+                fila[5]=rs.getString("p_enda");
+                fila[6]=rs.getString("p_folio");
+                fila[7]=rs.getString("p_peso"); 
+                fila[8]=rs.getString("p_fechap");
+                fila[9]=rs.getString("p_horap");
+                fila[10]=rs.getString("p_salida");
+                fila[11]=rs.getString("p_pebru");
+                fila[12]=rs.getString("p_peta");
+                fila[13]=rs.getString("p_pene");
+                fila[14]=rs.getString("p_fechas");
+                fila[15]=rs.getString("p_horas");
+
+                
+                model.addRow(fila);                        
+            }  
+            Tabla.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    }
+
+    private void desabilitar() {
+        p_destino.setEditable(false);
+        p_entradames.setEditable(false);
+        p_fechap.setEditable(false);
+        p_fechas.setEditable(false);
+        p_folio.setEditable(false);
+        p_horap.setEditable(false);
+        p_horas.setEditable(false);
+        p_origen.setEditable(false);
+        p_pesobruto.setEditable(false);
+        p_pesokg.setEditable(false);
+        p_pesoneto.setEditable(false);
+        p_pesotara.setEditable(false);
+        p_producto.setEditable(false);
+        p_proveedor.setEditable(false);
+        p_salida.setEditable(false);
+    }
 }
