@@ -27,6 +27,9 @@ public class A_Producto extends javax.swing.JFrame {
      */
     public A_Producto() {
         initComponents();
+        this.setLocationRelativeTo(null);//centrar ventanas
+       con = Conexion.geConnection(); //Realizar la conexion a la base de datos
+       desabilitar(); // Desabilitar el campo de texto 
         mostrar();
     }
 
@@ -80,7 +83,7 @@ public class A_Producto extends javax.swing.JFrame {
         b_guardar = new javax.swing.JButton();
         b_eliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        modificar_prod = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Producto");
@@ -334,10 +337,10 @@ public class A_Producto extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Modificar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        modificar_prod.setText("Modificar");
+        modificar_prod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                modificar_prodActionPerformed(evt);
             }
         });
 
@@ -361,7 +364,7 @@ public class A_Producto extends javax.swing.JFrame {
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(b_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(b_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(modificar_prod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(56, 56, 56)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
                 .addContainerGap())
@@ -391,7 +394,7 @@ public class A_Producto extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2)))
+                                .addComponent(modificar_prod)))
                         .addGap(0, 5, Short.MAX_VALUE))))
         );
 
@@ -400,7 +403,34 @@ public class A_Producto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
-       
+       if (evt.getButton()==1){
+            int fila = Tabla.getSelectedRow();
+            try {
+                habilitar();
+                String sql = "SELECT * FROM productos WHERE IDprod="+Tabla.getValueAt(fila, 0); 
+                sent = con.createStatement();
+                ResultSet rs = sent.executeQuery(sql);
+                rs.next();
+                p_proveedor.setText(rs.getString("proveedor"));
+                p_producto.setText(rs.getString("producto"));
+                p_origen.setText(rs.getString("origen"));
+                p_destino.setText(rs.getString("destino"));
+                p_entradames.setText(rs.getString("entrada"));
+                p_folio.setText(rs.getString("folio"));
+                p_pesokg.setText(rs.getString("pesokg"));
+                p_fechaen.setText(rs.getString("fechaentrada"));
+                p_status.setText(rs.getString("estatus"));
+                p_descri.setText(rs.getString("descripcion"));
+                p_salidano.setText(rs.getString("salida"));
+                p_pesobruto.setText(rs.getString("pesobruto"));
+                p_pesotara.setText(rs.getString("pesotara"));
+                p_pesoneto.setText(rs.getString("pesoneto"));
+                p_fechasa.setText(rs.getString("fechasalida"));
+                p_hora.setText(rs.getString("hora"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }            
+        }      
 
     }//GEN-LAST:event_TablaMouseClicked
 
@@ -465,13 +495,56 @@ public class A_Producto extends javax.swing.JFrame {
     }//GEN-LAST:event_b_nuevoActionPerformed
 
     private void b_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_eliminarActionPerformed
-    // TODO add your handling code here:
+                  try {
+            int fila = Tabla.getSelectedRow();
+            String sql = "DELETE FROM productos WHERE IDprod="+Tabla.getValueAt(fila, 0);
+            sent = con.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                mostrar();       
+                JOptionPane.showMessageDialog(null,"Producto eliminado");
+                limpiar();
+            } 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+        }          // TODO add your handling code here:  // TODO add your handling code here:
     }//GEN-LAST:event_b_eliminarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
+    private void modificar_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificar_prodActionPerformed
+            try {
+            String sql = "UPDATE productos SET proveedor=?, producto=?, origen=?, destino=?, entrada=?, folio=?, pesokg=?, fechaentrada=?, estatus=?, descripcion=?, salida=?, pesobruto=?, pesotara=?, pesoneto=?, fechasalida=?, hora=?"+"WHERE IDprod=?";
+            int fila = Tabla.getSelectedRow();
+            String dao =(String)Tabla.getValueAt(fila, 0);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, p_proveedor.getText());
+            ps.setString(2, p_producto.getText());
+            ps.setString(3, p_origen.getText());
+            ps.setString(4, p_destino.getText() );
+            ps.setString(5, p_entradames.getText());
+            ps.setString(6, p_folio.getText());
+            ps.setString(7, p_pesokg.getText());
+            ps.setString(8, p_fechaen.getText());
+            ps.setString(9, p_status.getText());
+            ps.setString(10, p_descri.getText());
+            ps.setString(11, p_salidano.getText());
+            ps.setString(12, p_pesobruto.getText());
+            ps.setString(13, p_pesotara.getText());
+            ps.setString(14, p_pesoneto.getText());
+            ps.setString(15, p_fechasa.getText());
+            ps.setString(16, p_hora.getText());
+            ps.setString(17, dao);
+            
+            int n = ps.executeUpdate();
+            if(n>0){
+                limpiar();
+                mostrar();
+                JOptionPane.showMessageDialog(null,"Producto modificado");
+            }                
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null,"Error"+e.getMessage());
+        }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_modificar_prodActionPerformed
 
     /**
      * @param args the command line arguments
@@ -515,7 +588,6 @@ public class A_Producto extends javax.swing.JFrame {
     private javax.swing.JButton b_guardar;
     private javax.swing.JButton b_nuevo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -535,6 +607,7 @@ public class A_Producto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton modificar_prod;
     private javax.swing.JTextField p_descri;
     private javax.swing.JTextField p_destino;
     private javax.swing.JTextField p_entradames;
@@ -616,31 +689,32 @@ private void habilitar() { // Codigo para habilitar y agregar otro usuario
     private void mostrar() { // Codigo para mostrar el contenido en las tablas
        try {
             con = Conexion.geConnection();
-            String[]titulos ={"proveedor","producto","origen","destino","entrada","folio","pesokg","fechaentrada","estatus","descripcion","salida","pesobruto","pesotara","pesoneto","fechasalida","hora"};
+            String[]titulos ={"ID Productos","proveedor","producto","origen","destino","entrada","folio","pesokg","fechaentrada","estatus","descripcion","salida","pesobruto","pesotara","pesoneto","fechasalida","hora"};
             String sql = "SELECT * FROM productos";
             model = new DefaultTableModel(null,titulos);
             sent = con.createStatement();
             ResultSet rs = sent.executeQuery(sql);
             
-            String []fila=new String[16];
+            String []fila=new String[17];
             while(rs.next()){
                
-                fila[0]=rs.getString("proveedor");
-                fila[1]=rs.getString("producto");
-                fila[2]=rs.getString("origen");
-                fila[3]=rs.getString("destino");
-                fila[4]=rs.getString("entrada");
-                fila[5]=rs.getString("folio");  
-                fila[6]=rs.getString("pesokg");
-                fila[7]=rs.getString("fechaentrada");
-                fila[8]=rs.getString("estatus");
-                fila[9]=rs.getString("descripcion");
-                fila[10]=rs.getString("salida");
-                fila[11]=rs.getString("pesobruto");
-                fila[12]=rs.getString("pesotara");
-                fila[13]=rs.getString("pesoneto");
-                fila[14]=rs.getString("fechasalida");
-                fila[15]=rs.getString("hora");
+                fila[0]=rs.getString("IDprod");
+                fila[1]=rs.getString("proveedor");
+                fila[2]=rs.getString("producto");
+                fila[3]=rs.getString("origen");
+                fila[4]=rs.getString("destino");
+                fila[5]=rs.getString("entrada");
+                fila[6]=rs.getString("folio");  
+                fila[7]=rs.getString("pesokg");
+                fila[8]=rs.getString("fechaentrada");
+                fila[9]=rs.getString("estatus");
+                fila[10]=rs.getString("descripcion");
+                fila[11]=rs.getString("salida");
+                fila[12]=rs.getString("pesobruto");
+                fila[13]=rs.getString("pesotara");
+                fila[14]=rs.getString("pesoneto");
+                fila[15]=rs.getString("fechasalida");
+                fila[16]=rs.getString("hora");
                 
                 model.addRow(fila);                        
             }  
