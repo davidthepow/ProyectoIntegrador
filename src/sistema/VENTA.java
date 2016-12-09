@@ -402,14 +402,17 @@ try {
             ArrayList<String[]> filas = new ArrayList<String[]>();
 
             while(rs.next()){
-                String []fila=new String[7];
-                fila[0]=rs.getString("IDventa");
+                String []fila=new String[9];
+                  fila[0]=rs.getString("IDventa");
                 fila[1]=rs.getString("f_entra");
-                fila[2]=rs.getString("num_p");
+                fila[2]=rs.getString("nom_p");
                 fila[3]=rs.getString("cod");
                 fila[4]=rs.getString("can");
                 fila[5]=rs.getString("precio");
-                fila[6]=rs.getString("des");  
+                fila[6]=rs.getString("subt");  
+                fila[7]=rs.getString("iva");
+                fila[8]=rs.getString("t_total");
+                
                 filas.add(fila);                                        
             }  
             
@@ -430,7 +433,7 @@ try {
                         
                 for (int i = 0;
                         i < filas.size(); i++) {
-                    wr.append("\"" + filas.get(i)[6] + "\",");
+                    wr.append("\"" + filas.get(i)[2] + "\",");
                 }
                 wr.append("]");
                 wr.append("\"List cantidad\":[");

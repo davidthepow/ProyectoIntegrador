@@ -39,15 +39,16 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="b_eliminar" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
                           <Component id="b_guardar" max="32767" attributes="0"/>
                           <Component id="b_nuevo" alignment="0" max="32767" attributes="0"/>
-                          <Component id="modificar_prod" max="32767" attributes="0"/>
+                          <Component id="modificar_prod" pref="156" max="32767" attributes="0"/>
+                          <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <Component id="jScrollPane1" pref="506" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="487" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -68,21 +69,25 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="b_nuevo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="b_guardar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Component id="modificar_prod" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="b_eliminar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="modificar_prod" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="5" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -179,10 +184,16 @@
         <Component class="javax.swing.JTextField" name="p_proveedor">
         </Component>
         <Component class="javax.swing.JTextField" name="p_producto">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="p_productoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="p_origen">
         </Component>
         <Component class="javax.swing.JTextField" name="p_destino">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="p_destinoActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -212,12 +223,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="p_descri" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="p_pesokg" max="32767" attributes="0"/>
-                              <Component id="p_folio" max="32767" attributes="0"/>
-                              <Component id="p_entradames" alignment="0" max="32767" attributes="0"/>
-                              <Component id="p_fechaen" alignment="0" pref="72" max="32767" attributes="0"/>
-                              <Component id="p_status" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="p_pesokg" max="32767" attributes="0"/>
+                                  <Component id="p_folio" max="32767" attributes="0"/>
+                                  <Component id="p_entradames" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="p_fechaen" alignment="0" pref="72" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="p_estatus" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -252,7 +265,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="p_status" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="p_estatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -300,6 +313,9 @@
         <Component class="javax.swing.JTextField" name="p_pesokg">
         </Component>
         <Component class="javax.swing.JTextField" name="p_fechaen">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="p_fechaenActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="p_descri">
         </Component>
@@ -308,10 +324,17 @@
             <Property name="text" type="java.lang.String" value="Estatus"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="p_status">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="p_statusActionPerformed"/>
-          </Events>
+        <Component class="javax.swing.JComboBox" name="p_estatus">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value=""/>
+                <StringItem index="1" value="Completo"/>
+                <StringItem index="2" value="Incompleto"/>
+                <StringItem index="3" value=""/>
+              </StringArray>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -425,10 +448,19 @@
         <Component class="javax.swing.JTextField" name="p_pesotara">
         </Component>
         <Component class="javax.swing.JTextField" name="p_pesoneto">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="p_pesonetoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="p_fechasa">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="p_fechasaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="p_hora">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="p_horaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -500,6 +532,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modificar_prodActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Imprimir"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

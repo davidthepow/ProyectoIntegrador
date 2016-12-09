@@ -5,12 +5,20 @@
  */
 package sistema;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import reporte.Reportito;
 
 /**
  *
@@ -63,7 +71,7 @@ public class A_Producto extends javax.swing.JFrame {
         p_fechaen = new javax.swing.JTextField();
         p_descri = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        p_status = new javax.swing.JTextField();
+        p_estatus = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -84,6 +92,7 @@ public class A_Producto extends javax.swing.JFrame {
         b_eliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         modificar_prod = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Producto");
@@ -98,6 +107,18 @@ public class A_Producto extends javax.swing.JFrame {
         jLabel4.setText("Origen");
 
         jLabel5.setText("Destino");
+
+        p_producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_productoActionPerformed(evt);
+            }
+        });
+
+        p_destino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_destinoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,13 +182,15 @@ public class A_Producto extends javax.swing.JFrame {
             }
         });
 
-        jLabel16.setText("Estatus");
-
-        p_status.addActionListener(new java.awt.event.ActionListener() {
+        p_fechaen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                p_statusActionPerformed(evt);
+                p_fechaenActionPerformed(evt);
             }
         });
+
+        jLabel16.setText("Estatus");
+
+        p_estatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Completo", "Incompleto", "" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -186,12 +209,13 @@ public class A_Producto extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(p_descri)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(p_pesokg)
-                            .addComponent(p_folio)
-                            .addComponent(p_entradames)
-                            .addComponent(p_fechaen, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                            .addComponent(p_status))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(p_pesokg)
+                                .addComponent(p_folio)
+                                .addComponent(p_entradames)
+                                .addComponent(p_fechaen, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+                            .addComponent(p_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -217,7 +241,7 @@ public class A_Producto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(p_status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(p_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(p_descri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,6 +262,24 @@ public class A_Producto extends javax.swing.JFrame {
         jLabel14.setText("Fecha");
 
         jLabel15.setText("Hora");
+
+        p_pesoneto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_pesonetoActionPerformed(evt);
+            }
+        });
+
+        p_fechasa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_fechasaActionPerformed(evt);
+            }
+        });
+
+        p_hora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_horaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -344,6 +386,13 @@ public class A_Producto extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Imprimir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -361,12 +410,13 @@ public class A_Producto extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(b_eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(b_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(b_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(modificar_prod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(modificar_prod, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(56, 56, 56)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -383,19 +433,22 @@ public class A_Producto extends javax.swing.JFrame {
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 12, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(b_nuevo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(b_guardar)
+                                .addGap(8, 8, 8)
+                                .addComponent(modificar_prod)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(b_eliminar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)
+                                .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(modificar_prod)))
-                        .addGap(0, 5, Short.MAX_VALUE))))
+                                .addComponent(jButton1)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
 
         pack();
@@ -418,8 +471,7 @@ public class A_Producto extends javax.swing.JFrame {
                 p_entradames.setText(rs.getString("entrada"));
                 p_folio.setText(rs.getString("folio"));
                 p_pesokg.setText(rs.getString("pesokg"));
-                p_fechaen.setText(rs.getString("fechaentrada"));
-                p_status.setText(rs.getString("estatus"));
+                p_fechaen.setText(rs.getString("fechaentrada"));                
                 p_descri.setText(rs.getString("descripcion"));
                 p_salidano.setText(rs.getString("salida"));
                 p_pesobruto.setText(rs.getString("pesobruto"));
@@ -437,10 +489,6 @@ public class A_Producto extends javax.swing.JFrame {
     private void p_entradamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_entradamesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_p_entradamesActionPerformed
-
-    private void p_statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_statusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_p_statusActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -465,7 +513,7 @@ public class A_Producto extends javax.swing.JFrame {
             ps.setString(6, p_folio.getText());
             ps.setString(7, p_pesokg.getText());
             ps.setString(8, p_fechaen.getText());
-            ps.setString(9, p_status.getText());
+            ps.setString(9, p_estatus.getSelectedItem().toString());
             ps.setString(10, p_descri.getText());
             ps.setString(11, p_salidano.getText());
             ps.setString(12, p_pesobruto.getText());
@@ -524,7 +572,7 @@ public class A_Producto extends javax.swing.JFrame {
             ps.setString(6, p_folio.getText());
             ps.setString(7, p_pesokg.getText());
             ps.setString(8, p_fechaen.getText());
-            ps.setString(9, p_status.getText());
+            ps.setString(9, p_estatus.getSelectedItem().toString());
             ps.setString(10, p_descri.getText());
             ps.setString(11, p_salidano.getText());
             ps.setString(12, p_pesobruto.getText());
@@ -545,6 +593,96 @@ public class A_Producto extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_modificar_prodActionPerformed
+
+    private void p_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_productoActionPerformed
+       p_producto.setText("Fruta de Palma de Aceite (RFF)");
+    }//GEN-LAST:event_p_productoActionPerformed
+
+    private void p_destinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_destinoActionPerformed
+        p_destino.setText("Planta Extractora de Aceite 'Don Jorge Mena Pérez'");
+    }//GEN-LAST:event_p_destinoActionPerformed
+
+    private void p_fechaenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_fechaenActionPerformed
+        Calendar cal = Calendar.getInstance();
+        String fecha = cal.get(cal.YEAR)+"/"+(cal.get(cal.MONTH)+1)+"/"+cal.get(cal.DATE);
+        p_fechaen.setText(fecha);
+    }//GEN-LAST:event_p_fechaenActionPerformed
+
+    private void p_fechasaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_fechasaActionPerformed
+        Calendar cal = Calendar.getInstance();
+        String fecha = cal.get(cal.YEAR)+"/"+(cal.get(cal.MONTH)+1)+"/"+cal.get(cal.DATE);
+        p_fechasa.setText(fecha);
+    }//GEN-LAST:event_p_fechasaActionPerformed
+
+    private void p_horaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_horaActionPerformed
+        Calendar cal = Calendar.getInstance();
+        String hora = cal.get(cal.HOUR_OF_DAY)+":"+(cal.get(cal.MINUTE)+1)+":"+cal.get(cal.SECOND);
+        p_hora.setText(hora);
+    }//GEN-LAST:event_p_horaActionPerformed
+
+    private void p_pesonetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_pesonetoActionPerformed
+       try{
+           float bruto, tara, neto;
+           bruto = Float.parseFloat(p_pesobruto.getText());
+           tara = Float.parseFloat(p_pesotara.getText());
+           neto = bruto - tara;
+           p_pesoneto.setText(String.valueOf(neto));           
+       }catch(Exception e){
+           
+       }
+    }//GEN-LAST:event_p_pesonetoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            File f;
+            f = new File("C:\\Users\\ing_m\\reporte.json");
+
+            String proveedor = p_proveedor.getText();
+            String producto = p_producto.getText();
+            String origen = p_origen.getText();
+            String destino = p_destino.getText();
+            String entrada = p_entradames.getText();
+            String folio = p_folio.getText();
+            String pesokg = p_pesokg.getText();
+            String fechaen = p_fechaen.getText();
+            // FALTA HORA DE LA ENTRADA
+            String salida = p_salidano.getText();
+            String pesobruto = p_pesobruto.getText();
+            String pesotara = p_pesotara.getText();
+            String pesoneto = p_pesoneto.getText();
+            String fechasa = p_fechasa.getText();
+            String horasa = p_hora.getText();
+            
+//Escritura 
+            try {
+                FileWriter w = new FileWriter(f);
+                BufferedWriter bw = new BufferedWriter(w);
+                PrintWriter wr = new PrintWriter(bw);
+                wr.write("{\"proveedor\": \""+proveedor+"\","
+                        + "\"producto\": \""+producto+"\","
+                        + "\"origen\": \""+origen+"\","
+                        + "\"destino\": \""+destino+"\","
+                        + "\"entrada\": \""+entrada+"\","
+                        + "\"folio\": \""+folio+"\","
+                        + "\"pesokg\": \""+pesokg+"\","
+                        + "\"fechaen\": \""+fechaen+"\","
+                        + "\"salida\": \""+salida+"\","
+                        + "\"pesobruto\": \""+pesobruto+"\","
+                        + "\"pesotara\": \""+pesotara+"\","
+                        + "\"pesoneto\": \""+pesoneto+"\","
+                        + "\"fechasa\": \""+fechasa+"\","
+                        + "\"horasa\": \""+horasa+"\",");
+                wr.append("}");
+                wr.close();
+                bw.close();
+            } catch (IOException e) {
+            };
+            Reportito re = new Reportito(f,"C:\\Users\\ing_m\\"+folio+".pdf");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -588,6 +726,7 @@ public class A_Producto extends javax.swing.JFrame {
     private javax.swing.JButton b_guardar;
     private javax.swing.JButton b_nuevo;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -611,6 +750,7 @@ public class A_Producto extends javax.swing.JFrame {
     private javax.swing.JTextField p_descri;
     private javax.swing.JTextField p_destino;
     private javax.swing.JTextField p_entradames;
+    private javax.swing.JComboBox p_estatus;
     private javax.swing.JTextField p_fechaen;
     private javax.swing.JTextField p_fechasa;
     private javax.swing.JTextField p_folio;
@@ -623,7 +763,6 @@ public class A_Producto extends javax.swing.JFrame {
     private javax.swing.JTextField p_producto;
     private javax.swing.JTextField p_proveedor;
     private javax.swing.JTextField p_salidano;
-    private javax.swing.JTextField p_status;
     // End of variables declaration//GEN-END:variables
 
 private void habilitar() { // Codigo para habilitar y agregar otro usuario
@@ -635,7 +774,6 @@ private void habilitar() { // Codigo para habilitar y agregar otro usuario
     p_folio.setEditable(true);
     p_pesokg.setEditable(true);
     p_fechaen.setEditable(true);
-    p_status.setEditable(true);
     p_descri.setEditable(true);
     p_salidano.setEditable(true);
     p_pesobruto.setEditable(true);
@@ -656,7 +794,6 @@ private void habilitar() { // Codigo para habilitar y agregar otro usuario
     p_folio.setEditable(false);
     p_pesokg.setEditable(false);
     p_fechaen.setEditable(false);
-    p_status.setEditable(false);
     p_descri.setEditable(false);
     p_salidano.setEditable(false);
     p_pesobruto.setEditable(false);
@@ -676,7 +813,6 @@ private void habilitar() { // Codigo para habilitar y agregar otro usuario
         p_folio.setText(null);
         p_pesokg.setText(null);
         p_fechaen.setText(null);
-        p_status.setText(null);
         p_descri.setText(null);
         p_salidano.setText(null);
         p_pesobruto.setText(null);
